@@ -86,10 +86,10 @@
                                     <date-picker type="year" v-model="year0"
                                                  style="width: 200px"
                                                  clearable="false"
-                                                 @on-change="yearChange(year0)">
+                                                 @on-change="yearChange">
                                     </date-picker>
                                     <i-input type="text" v-model="courseName" style="width:200px" placeholder="课程名"></i-input>
-                                    <i-button shape="circle" icon="ios-search"></i-button>
+                                    <i-button shape="circle" icon="ios-search" @click="getCourseFunc()"></i-button>
                                 </div>
                             </div>
                         </div>
@@ -114,10 +114,9 @@
                                         <tr v-for="item in courseList">
                                             <td>{{item.id}}</td>
                                             <td>{{item.name}}</td>
-                                            <td><span v-for="point in item.indexPointList">{{point.indexPoint}};</span></td>
-                                            <td>{{item.description}}</td>
-                                            <td><span v-for="point in item.teacherList">{{point.teacherName}};</span></td>
-
+                                            <td>{{item.points}}</td>
+                                            <td>{{item.des}}</td>
+                                            <td>{{item.teachers}}</td>
                                         </tr>
 
                                         </tbody>
@@ -139,25 +138,38 @@
 
 
 <script>
-    var vue = new Vue({
+    var app = new Vue({
         el:"#app",
         data:{
             courseName:'',
-
-            year0:'2018',
-            courseList:[{
-                id:1,
-                name:'工科数学分析',
-                description:'这就是工科数学分析的描述',
-                indexPointList:[{indexPoint:'3.1'},{indexPoint:'9.1'}],
-                teacherList:[{teacherName:'孙晓晓'},{teacherName:'李大二'}]
-            }]
+            year0:"",
+            courseList:[]
         },
         methods:{
-            yearChange(year0){
+
+            refreshList() {
+                console.log(this.year0);
+                ajaxPostJSON("/system/professor/getCourseByYearName",{data:{year:this.year0,courseName: this.courseName}}, function (d) {
+                    app.courseList = d.data.courseList;
+                }, null, true, false);
+            },
+
+            yearChange(year){
                 //重新请求得到当年的年份
+                this.year0 = year;
+                this.refreshList();
+            },
+
+            getCourseFunc() {
+                this.refreshList();
             }
+
         },
+
+        mounted(){
+            this.year0 = "2010";
+            this.refreshList();
+        }
     })
 
 </script>
