@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.RelatedIndexPointCourseTeacherDao">
+
+    <insert id="addRelatedIndexPointCourseTeacher" parameterType="com.entity.RelatedIndexPointCourseTeacher">
+        INSERT INTO RelatedIndexPointCourseTeacher(id,indexPointId,courseId,teacherId,hasChosen,evaluteValue)
+        VALUES (#{id},#{indexPointId},#{courseId},#{teacherId},#{hasChosen},#{evaluteValue})
+    </insert>
+
+    <update id="updateRelatedIndexPointCourseTeacher" parameterType="com.entity.RelatedIndexPointCourseTeacher">
+        UPDATE RelatedIndexPointCourseTeacher SET hasChosen = #{hasChosen}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getRelatedIndexPointCourseTeacher" parameterType="com.entity.RelatedIndexPointCourseTeacher" resultType="com.entity.RelatedIndexPointCourseTeacher">
+        SELECT * FROM RelatedIndexPointCourseTeacher
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="indexPointId!=null">
+                and indexPointId = #{indexPoint}
+            </if>
+            <if test="courseId!=null">
+                and courseId = #{courseId}
+            </if>
+            <if test="hasChosen!=null">
+                and hasChosen = #{hasChosen}
+            </if>
+        </where>
+    </select>
+</mapper>

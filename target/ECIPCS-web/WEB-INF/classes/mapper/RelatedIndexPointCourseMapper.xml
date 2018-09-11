@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.RelatedIndexPointCourseDao">
+
+    <insert id="addRelatedIndexPointCourse" parameterType="com.entity.RelatedIndexPointCourse">
+        INSERT INTO RelatedIndexPointCourse(id,indexPointId,courseId,supportFactor,supportDegree,evaluateValue,teachingContent,assessmentContent)
+        VALUES (#{id},#{indexPointId},#{courseId},#{supportFactor},#{supportDegree},#{evaluateValue},#{teachingContent},#{assessmentContent})
+    </insert>
+
+    <update id="updateRelatedIndexPointCourse" parameterType="com.entity.RelatedIndexPointCourse">
+        UPDATE RelatedIndexPointCourse SET supportFactor=#{supportFactor}, supportDegree = #{supportDegree},
+        evaluateValue = #{evaluateValue}, techingContent = #{techingContent}, assessmentContent = #{assessmentContent}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getRelatedIndexPointCourse" resultType="com.entity.RelatedIndexPointCourse" parameterType="com.entity.RelatedIndexPointCourse">
+        SELECT * FROM RelatedIndexPointCourse
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="indexPointId!=null">
+                and indexPointId = #{indexPointId}
+            </if>
+            <if test="courseId!=null">
+                and courseId = #{courseId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getPointValue" resultType="Double">
+        SELECT supportFactor FROM RelatedIndexPointCourse WHERE courseId = #{course} AND indexPointId = #{id} AND supportDegree = #{degree}
+    </select>
+
+    <select id="getPointId" resultType="String">
+        SELECT indexPointId FROM RelatedIndexPointCourse WHERE courseId = #{id}
+    </select>
+
+</mapper>

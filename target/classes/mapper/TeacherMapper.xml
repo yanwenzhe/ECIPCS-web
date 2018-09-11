@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.TeacherDao">
+
+    <insert id="addTeacher" parameterType="com.entity.Teacher">
+        INSERT INTO Teacher (id,username,name,password,phone,year)
+        VALUES (#{id},#{username},#{name},#{password},#{phone},#{year})
+    </insert>
+
+    <update id="updateTeacher" parameterType="com.entity.Teacher">
+        UPDATE Teacher SET password = #{password}, phone = #{phone}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getTeacher" resultType="com.entity.Teacher" parameterType="com.entity.Teacher">
+        SELECT * FROM Teacher
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if  test="username!=null">
+                and username = #{username}
+            </if>
+
+            <if test="name!=null">
+                and name = #{name}
+            </if>
+            <if test="year!=null">
+                and year = #{year}
+            </if>
+        </where>
+        order by year desc
+    </select>
+
+    <select id="getTeacherId" resultType="String">
+        SELECT id FROM Teacher WHERE username = #{id} AND year = #{year}
+    </select>
+</mapper>

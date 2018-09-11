@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.RelatedTeacherCourseDao">
+
+    <insert id="addRelatedTeacherCourse" parameterType="com.entity.RelatedTeacherCourse">
+        INSERT INTO RelatedTeacherCourse (id,teacherId,courseId,oldProblem,oldSuggestion,result,newProblem)
+        VALUES (#{id},#{teacherId},#{courseId},#{oldProblem},#{oldSuggestion},#{result},#{newProblem})
+    </insert>
+
+    <update id="updateRelatedTeacherCourse" parameterType="com.entity.RelatedTeacherCourse">
+        UPDATE RelatedTeacherCourse SET
+        WHERE id = #{id}
+    </update>
+
+    <select id="getRelatedTeacherCourse" resultType="com.entity.RelatedTeacherCourse" parameterType="com.entity.RelatedTeacherCourse">
+        SELECT * FROM RelatedTeacherCourse
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="teacherId!=null">
+                and teacherId = #{teacherId}
+            </if>
+            <if test="courseId!=null">
+                and courseId = #{courseId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getCourseId" resultType="String">
+        SELECT courseId FROM RelatedTeacherCourse WHERE teacherId = #{id}
+    </select>
+
+</mapper>

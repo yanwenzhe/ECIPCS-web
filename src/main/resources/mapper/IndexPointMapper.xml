@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.IndexPointDao">
+
+    <insert id="addIndexPoint" parameterType="com.entity.IndexPoint">
+        INSERT INTO IndexPoint(id,indexRequirementId,point,yearStart,yearEnd,description)
+        VALUES (#{id},#{indexRequirementId},#{point},#{yearStart},#{yearEnd},#{description})
+    </insert>
+
+    <update id="updateIndexPoint" parameterType="com.entity.IndexPoint">
+        UPDATE IndexPoint SET description = #{description}
+        WHERE id=#{id}
+    </update>
+
+    <select id="getIndexPoint" resultType="com.entity.IndexPoint" parameterType="com.entity.IndexPoint">
+        SELECT * FROM IndexPoint
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="indexRequirementId!=null">
+                and indexRequirementId = #{indexRequirementId}
+            </if>
+            <if test="point!=null">
+                and point =#{point}
+            </if>
+            <if test="yearStart!=null">
+                and #{yearStart} >= yearStart
+                and yearEnd > #{yearStart}
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.CourseDao">
+    <insert id="addCourse" parameterType="com.entity.Course">
+        INSERT INTO Course(id,name,description,year)
+        VALUES (#{id},#{name},#{description},#{year})
+    </insert>
+
+    <update id="updateCourse" parameterType="com.entity.Course">
+        UPDATE Course SET name = #{name}, description = #{description}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getCourse" resultType="com.entity.Course" parameterType="com.entity.Course">
+        SELECT * FROM Course
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="name!=null">
+                and name = #{name}
+            </if>
+            <if test="year!=null">
+                and year = #{year}
+            </if>
+        </where>
+    </select>
+
+    <select id="getCourseName" resultType="String">
+        SELECT name FROM Course WHERE id = #{id}
+    </select>
+
+</mapper>

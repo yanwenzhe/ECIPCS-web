@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.StudentScoreDao">
+
+    <insert id="addStudentScore" parameterType="com.entity.StudentScore">
+        INSERT INTO StudentScore (id,courseId,teacherId,studentId,indexPointId,columName,score,fullScore)
+        VALUES (#{id},#{courseId},#{teacherId},#{studentId},#{indexPointId},#{columName},#{score},#{fullScore})
+    </insert>
+
+    <update id="updateStudentScore" parameterType="com.entity.StudentScore">
+        UPDATE StudentScore SET score = #{score}, fullScore = #{fullScore}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getStudentScore" resultType="com.entity.StudentScore" parameterType="com.entity.StudentScore">
+        SELECT * FROM StudentScore
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="teacherId!=null">
+                and teacherId = #{teacherId}
+            </if>
+            <if test="courseId!=null">
+                and courseId = #{courseId}
+            </if>
+            <if test="studentId!=null">
+                and studentId = #{studentId}
+            </if>
+            <if test="indexPointId!=null">
+                and indexPointId = #{indexPointId}
+            </if>
+            <if test="columName!=null">
+                and columName = #{columName}
+            </if>
+        </where>
+    </select>
+    <select id="getStuScore" resultType="Double">
+        SELECT score FROM StudentScore
+        WHERE courseId = #{course} AND studentId = #{stuId} AND columName = #{colum}
+    </select>
+
+    <select id="getColumName" resultType="String">
+        SELECT DISTINCT (columName)FROM StudentScore WHERE courseId = #{course}
+    </select>
+
+    <select id="getScore" resultType="Double">
+        SELECT DISTINCT (fullScore)FROM StudentScore WHERE courseId = #{course} AND columName = #{colum}
+    </select>
+
+    <select id="getPointid" resultType="String">
+        SELECT DISTINCT (indexPointId)FROM StudentScore WHERE courseId = #{course} AND columName = #{colum} AND fullScore = #{score}
+    </select>
+
+    <select id="getPoint" resultType="String">
+        SELECT point FROM IndexPoint WHERE id = #{pointid}
+    </select>
+
+    <select id="getStudentId" resultType="String">
+        SELECT DISTINCT (studentId)FROM StudentScore WHERE courseId = #{course}
+    </select>
+
+    <select id="getFullScore" resultType="Double">
+        SELECT DISTINCT (fullScore)FROM StudentScore WHERE courseId = #{course} AND columName = #{colum} AND indexPointId = #{pointId}
+    </select>
+
+    <select id="getAverageScore" resultType="Double">
+        SELECT score FROM StudentScore WHERE courseId = #{course} AND columName = #{colum} AND indexPointId = #{pointId}
+    </select>
+</mapper>
