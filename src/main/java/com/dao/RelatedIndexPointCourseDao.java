@@ -30,4 +30,5 @@ public interface RelatedIndexPointCourseDao {
 
     public List<Double> getPointValue(@Param("course")String course,@Param("id")String id,@Param("degree")String degree);
     public List<String> getPointId(@Param("id")String id);
+    public void updateRelatedIndexPointCourseValue(RelatedIndexPointCourse relatedIndexPointCourse);
 }

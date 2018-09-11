@@ -88,7 +88,7 @@
     </mvc:annotation-driven>
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/system/**"/>
+            <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/system/login/**"/>
             <bean class="com.utils.LoginInterceptor"></bean>
         </mvc:interceptor>

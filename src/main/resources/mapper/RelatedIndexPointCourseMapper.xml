@@ -38,4 +38,10 @@
         SELECT indexPointId FROM RelatedIndexPointCourse WHERE courseId = #{id}
     </select>
 
+
+    <update id="updateRelatedIndexPointCourseValue" parameterType="com.entity.RelatedIndexPointCourse">
+        UPDATE RelatedIndexPointCourse SET teachingContent = #{evaluateValue}
+        WHERE indexPointId = #{indexPointId} and courseId = #{courseId}
+    </update>
+
 </mapper>

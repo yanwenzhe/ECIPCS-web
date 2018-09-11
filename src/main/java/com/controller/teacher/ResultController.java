@@ -2,6 +2,8 @@ package com.controller.teacher;
 
 import com.dao.RelatedIndexPointCourseDao;
 import com.dao.StudentScoreDao;
+import com.entity.RelatedIndexPointCourse;
+import com.utils.GuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -64,13 +66,11 @@ public class ResultController {
 
 
         List<String> indexPointId = relatedIndexPointCourseDao.getPointId(id);
-        for (String item:indexPointId
-             ) {
+        for (String item:indexPointId) {
             List<Object>inpo = new ArrayList<>();
 
             List<String>points = studentScoreDao.getPoint(item);
-            for (String item6:points
-                 ) {
+            for (String item6:points) {
 
                 System.out.println("1:"+item6);
 
@@ -137,7 +137,15 @@ public class ResultController {
 
                     double xyz = average/allScore*item2;
 
+
                     inpo.add(df.format(xyz));
+
+
+                    if(allScore*item2==0.0) xyz=0.0;
+                    //更新评价值
+                    relatedIndexPointCourseDao.updateRelatedIndexPointCourseValue(new RelatedIndexPointCourse(
+                           null,item,id,0.0,null,xyz,null,null)
+                    );
 
                     System.out.println("7:"+xyz);
                     System.out.println("\n");
