@@ -30,4 +30,10 @@ public interface CourseDao {
 
     public List<String> getCourseName(@Param("id")String id);
 
+    /**
+     * 根据年份和输入的课程名模糊查询
+     * @param course
+     * @return
+     */
+    public List<Course> getCourseByName(Course course);
 }

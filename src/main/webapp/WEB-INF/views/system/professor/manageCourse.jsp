@@ -86,15 +86,15 @@
 
                                     <i-select  v-model="indexPoint"
                                                style="float:right;width:150px;margin-right: 30px;"
-                                               @on-change="indexPointChange">
-                                        <i-option v-for="item in indexPointList " :value="item.id" :key="item.name">
+                                               @on-change="indexPointChange()">
+                                        <i-option v-for="item in indexPointList " :value="item.point">
                                             {{item.point}}
                                         </i-option>
                                     </i-select>
                                     <p style="margin-right:5px;float: right; font-size:15px;margin-top: 4px">指标点</p>
 
                                     <date-picker type="year" v-model="year0"
-                                                 :ediltable="false"
+                                                 clearable="false"
                                                  style="float:right;width:150px;margin-right: 30px;"
                                                  @on-change="yearChange">
                                     </date-picker>
@@ -144,8 +144,7 @@
                                             <td>{{item.teachingContent}}</td>
                                             <td>{{item.assessmentContent}}</td>
                                             <td>
-                                                <i-button type="primary" size="small">编辑</i-button>&nbsp;&nbsp;
-
+                                                <i-button type="primary" size="small" @click="updateCourseFunc(item.id)">编辑</i-button>
                                             </td>
                                         </tr>
 
@@ -164,6 +163,44 @@
 
     </div>
 
+
+    <Modal  :title="modal.title" width="600" v-model="modal.show" :loading="modal.loading"
+            @on-ok="modal_ok()" :mask-closable="false">
+        <i-form v-model="updateCourse" :label-width="80" v-if="modal.type==0">
+            <form-item label="编号">
+                <i-input v-model="updateCourse.id" ></i-input>
+            </form-item>
+
+            <form-item label="课程名">
+                <i-input v-model="updateCourse.courseName" ></i-input>
+            </form-item>
+
+            <form-item label="教学内容">
+                <i-input v-model="updateCourse.teachingContent" text="textarea" :rows="4"></i-input>
+            </form-item>
+
+            <form-item label="考核内容">
+                <i-input v-model="updateCourse.assessmentContent" text="textarea" :rows="4"></i-input>
+            </form-item>
+        </i-form>
+
+        <i-form :label-width="80" v-else v-model="updateCourse">
+
+            <form-item label="编号">
+                <i-span>{{updateCourse.id}}</i-span>
+            </form-item>
+            <form-item label="课程名">
+                <i-span>{{updateCourse.courseName}}</i-span>
+            </form-item>
+            <form-item label="教学内容">
+                <i-input v-model="updateCourse.teachingContent" text="textarea" :rows="4" ></i-input>
+            </form-item>
+            <form-item label="考核内容">
+                <i-input v-model="updateCourse.assessmentContent" text="textarea" :rows="4" ></i-input>
+            </form-item>
+        </i-form>
+    </Modal>
+
 </div>
 
 
@@ -177,6 +214,17 @@
             year0:'', //年份
             indexPointList:[], //指标点选择列表
             list:[],//关联表
+            modal:{
+                title:'',
+                loading: true,
+                show: false,
+            },
+            updateCourse:{
+                id:'',
+                courseName:'',
+                teachingContent:'',
+                assessmentContent:''
+            }
         },
         methods:{
             //所有的点击按钮
@@ -188,50 +236,84 @@
             },
 
             refreshList() {
-                //选中指标点后，年份也就确定了
-                ajaxGet("/system/professor/getIndexPointCourse1?indexPointId=" + this.indexPointId, function (d) {
+                //console.log(this.year0);
+                ajaxGet("/system/professor/getIndexPointCourse1?indexPointId=" + this.indexPointId +"&year="+this.year0, function (d) {
                     app.list = d.data.list;
+                    console.log(app.list);
                 }, null, true, false);
-
-                console.log(this.list.length);
-                for (var i = 0; i < this.list.length; i++) {
-                    ajaxGet("/system/professor/getCourseName?courseId=" + this.list[i].courseId, function (d) {
-                        app.list[i].courseId = d.data.courseName;
-                        console(d.data.courseName);
-                    }, null, true, false);
-                }
             },
 
             refreshIndexPoint(){
                 ajaxGet("/system/professor/getIndexPointList?year="+this.year0,function (d) {
                     app.indexPointList = d.data.indexPointList;
+                    //console.log(app.indexPointList);
+                },null,true,false);
+            },
+
+            refreshListByYear()
+            {
+                //年份改变，更新列表
+                console.log(this.year0)
+                ajaxGet("/system/professor/getIndexPointCourseByYear?year="+this.year0,function (d) {
+                    app.list = d.data.list;
+                    console.log(app.list);
                 },null,true,false);
             },
 
             yearChange(year){
                 this.year0 = year;
-                console.log(this.year0);
                 //获取指标点列表
                 this.refreshIndexPoint();
-
-                ajaxGet("/system/professor/getIndexPointCourseByYear?year="+this.year0,function (d) {
-                    app.list = d.data.list;
-                },null,true,false);
             },
 
             indexPointChange(){
                 for(var i=0;i<this.indexPointList.length;i++){
-                    if(this.indexPointList[i].point==this.indexPoint){//选择指标点之后，把id和描述记住
+                    if(this.indexPointList[i].point == this.indexPoint){//选择指标点之后，把id和描述记住
                         app.indexPointDescription = this.indexPointList[i].description;
                         app.indexPointId = this.indexPointList[i].id;
                         break;
                     }
-                    this.refreshList();
                 }
+                console.log("指标点改变"+this.year0+" "+this.indexPointId);
+                this.refreshList();
+            },
+
+            updateCourseFunc(value){
+                console.log(value);
+                this.modal.title="编辑课程";
+                for(var i=0;i<this.list.length;i++)
+                {
+                    if (value==this.list[i].id){
+                        this.updateCourse.id = value;
+                        this.updateCourse.courseName = this.list[i].courseId;
+                        this.updateCourse.teachingContent=this.list[i].teachingContent;
+                        this.updateCourse.assessmentContent=this.list[i].assessmentContent;
+                        break;
+                    }
+                }
+                this.modal.show = true;
+            },
+
+            modal_ok(){
+                ajaxPostJSON("/system/professor/updateCourse1",{updateCourse:app.updateCourse},function (d) {
+                    app.refreshList();
+                    app.$Modal.success({
+                        title: "修改成功",
+                    });
+                },function (d) {
+                    app.$Modal.error({
+                        title: "修改失败",
+                    });
+                },false,false)
+
+                this.modal.show=false;
+
             }
         },
         mounted(){
-            this.refreshList();
+            this.year0="2009";
+            this.refreshIndexPoint();
+            this.refreshListByYear();
         }
     })
 
