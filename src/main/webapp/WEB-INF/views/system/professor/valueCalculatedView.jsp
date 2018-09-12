@@ -130,7 +130,7 @@
                                             <th>2009-2010学年</th>
                                             <th>2010-2011学年</th>
                                             <th>最终结果</th>
-                                            <th>操作</th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -143,10 +143,7 @@
                                             <td>{{item.supportValue1}}</td>
                                             <td>{{item.supportValue2}}</td>
                                             <td>{{item.supportValueMin}}</td>
-                                            <td>
-                                                <i-button type="primary" size="small">评价值选择</i-button>&nbsp;&nbsp;
-                                                <i-button type="primary" size="small">进入查看</i-button>&nbsp;&nbsp;
-                                            </td>
+
                                         </tr>
                                         <tr>
                                             <td>总计</td>

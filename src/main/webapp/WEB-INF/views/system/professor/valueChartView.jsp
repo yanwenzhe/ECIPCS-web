@@ -16,7 +16,7 @@
     <%@include file="/WEB-INF/views/include/adminlteBlankScript.jsp" %>
 
 
-    <title>课程管理</title>
+    <title>毕业达成度图形化</title>
     <style>
         .centerContent{
             margin-top: 8px;
@@ -81,14 +81,15 @@
                             <div class="backGroundWidth">
                                 <div style="margin-top: 12px;margin-bottom: 12px">
 
+
                                     <form action="/system/professor/download" enctype="multipart/form-data" method="post"
-                                          style="float:left;width:150px;margin-right: 30px;">
-                                        <input type="submit" value="下载"></input>
+                                          style="float:left;width:150px;margin-left: 30px;margin-bottom: 4px">
+                                        <input type="submit" value="下载" class="btn btn-default"></input>
                                     </form>
 
 
                                     <i-select  v-model="years"
-                                               style="float:right;width:150px;margin-right: 30px;"
+                                               style="float:right;width:150px;margin-right: 30px;margin-bottom: 4px"
                                                >
                                         <i-option v-for="item in yearsList " :value="item.id" :key="item.label">
                                             {{item.label}}
