@@ -4,6 +4,7 @@ public class StudentScore {
 
   private String id; //编号
   private String courseId; //课程id
+  private String teacherId;
   private String studentId; //学生id
   private String indexPointId; //指标点id
   private String columName; //列名
@@ -11,6 +12,25 @@ public class StudentScore {
   private double fullScore; //满分
 
   public StudentScore() {
+  }
+
+  public String getTeacherId() {
+    return teacherId;
+  }
+
+  public void setTeacherId(String teacherId) {
+    this.teacherId = teacherId;
+  }
+
+  public StudentScore(String id, String courseId, String studentId, String teacherId, String indexPointId, String columName, double score, double fullScore) {
+    this.id = id;
+    this.courseId = courseId;
+    this.studentId = studentId;
+    this.indexPointId = indexPointId;
+    this.columName = columName;
+    this.score = score;
+    this.fullScore = fullScore;
+    this.teacherId = teacherId;
   }
 
   public StudentScore(String id, String courseId, String studentId, String indexPointId, String columName, double score, double fullScore) {
@@ -21,6 +41,11 @@ public class StudentScore {
     this.columName = columName;
     this.score = score;
     this.fullScore = fullScore;
+  }
+
+  public void print()
+  {
+    System.out.println("id:"+id+" courseId:"+courseId+" studentId:"+studentId+" indexPointId:"+indexPointId+" columName:"+columName+" score:"+score+" full:"+fullScore);
   }
 
   public String getId() {
