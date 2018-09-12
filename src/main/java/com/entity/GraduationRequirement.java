@@ -4,7 +4,7 @@ package com.entity;
 public class GraduationRequirement {
 
   private String id; //编号
-  private String indexPintId; //指标点id
+  private String indexPointId; //指标点id
   private String yearStart; //开始学年
   private String yearEnd; //结束学年
   private double value; //某个指标点的达成度
@@ -13,9 +13,9 @@ public class GraduationRequirement {
   public GraduationRequirement() {
   }
 
-  public GraduationRequirement(String id, String indexPintId, String yearStart, String yearEnd, double value) {
+  public GraduationRequirement(String id, String indexPointId, String yearStart, String yearEnd, double value) {
     this.id = id;
-    this.indexPintId = indexPintId;
+    this.indexPointId = indexPointId;
     this.yearStart = yearStart;
     this.yearEnd = yearEnd;
     this.value = value;
@@ -31,12 +31,12 @@ public class GraduationRequirement {
   }
 
 
-  public String getIndexPintId() {
-    return indexPintId;
+  public String getIndexPointId() {
+    return indexPointId;
   }
 
-  public void setIndexPintId(String indexPintId) {
-    this.indexPintId = indexPintId;
+  public void setIndexPointId(String indexPointId) {
+    this.indexPointId = indexPointId;
   }
 
 

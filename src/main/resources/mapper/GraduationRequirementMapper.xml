@@ -7,7 +7,7 @@
 
     <insert id="addGraduationRequirement" parameterType="com.entity.GraduationRequirement">
         INSERT INTO GraduationRequirement(id,indexPointId,yearStart,yearEnd,value)
-        VALUES (#{id},#{indexPoint},#{yearStart},#{yearEnd},#{value})
+        VALUES (#{id},#{indexPointId},#{yearStart},#{yearEnd},#{value})
     </insert>
 
     <update id="updateGraduationRequirement" parameterType="com.entity.GraduationRequirement">

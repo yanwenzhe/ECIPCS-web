@@ -40,7 +40,7 @@
 
 
     <update id="updateRelatedIndexPointCourseValue" parameterType="com.entity.RelatedIndexPointCourse">
-        UPDATE RelatedIndexPointCourse SET teachingContent = #{evaluateValue}
+        UPDATE RelatedIndexPointCourse SET evaluateValue = #{evaluateValue}
         WHERE indexPointId = #{indexPointId} and courseId = #{courseId}
     </update>
 

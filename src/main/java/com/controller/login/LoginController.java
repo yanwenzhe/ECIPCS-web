@@ -69,7 +69,7 @@ public class LoginController {
             List<Teacher> teacherList=teacherDao.getTeacher(new Teacher(null,username,null,null,null,null));
             if(teacherList!=null) {
                 for (Teacher teacher : teacherList) {
-                    if(teacher.getPassword().equals("123456")){
+                    if(password.equals("123456")){
                         //设置session
                         model.addAttribute("username",teacher.getName());
                         book=1;

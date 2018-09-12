@@ -12,7 +12,7 @@ public interface GraduationRequirementDao {
      * 添加毕业要求达成度
      * @param graduationRequirement
      */
-    public void addGraGraduationRequirement(GraduationRequirement graduationRequirement);
+    public void addGraduationRequirement(GraduationRequirement graduationRequirement);
 
     /**
      * 只能修改毕业达程度的评估值

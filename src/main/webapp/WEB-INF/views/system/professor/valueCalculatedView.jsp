@@ -136,7 +136,7 @@
                                         <tr v-for="item in relatedList">
 
                                             <td>{{item.name}}</td>
-                                            <td >
+                                            <td>
                                                 {{item.supportFactor}}
                                             </td>
                                             <td>{{item.supportValue1}}</td>
@@ -146,6 +146,13 @@
                                                 <i-button type="primary" size="small">评价值选择</i-button>&nbsp;&nbsp;
                                                 <i-button type="primary" size="small">进入查看</i-button>&nbsp;&nbsp;
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td>总计</td>
+                                            <td>1.0</td>
+                                            <td>X</td>
+                                            <td>X</td>
+                                            <td>{{result}}</td>
                                         </tr>
 
                                         </tbody>
@@ -177,7 +184,8 @@
             courseList:[],
             courseList2:[],
             relatedList:[],
-            year:'2009'
+            year:'2009',
+            result:0.0
 
         },
         methods:{
@@ -191,7 +199,7 @@
                 this.relatedList.splice(0,this.relatedList.length);
                 for(var i=0;i<this.indexPointList.length;i++){
                     if(this.indexPointId==this.indexPointList[i].id)
-                        this.idnexPointDesc=this.indexPointList[i].description;
+                        this.indexPointDesc=this.indexPointList[i].description;
                 }
                 this.refreshCourseList();
             },
@@ -208,20 +216,28 @@
                     for(var j=0;j<this.courseList2.length;j++){
                         if(this.courseList[i].name==this.courseList2[j].name&&this.courseList[i].supportDegree=='H'){
 
-                            this.relatedList.push({
+                            var supportValueMin;
+                            if(this.courseList[i].evaluateValue==0.0) supportValueMin=this.courseList2[j].evaluateValue;
+                            else if(this.courseList2[j].evaluateValue==0.0) supportValueMin=this.courseList[i].evaluateValue;
+                            else supportValueMin=this.courseList[i].evaluateValue>this.courseList2[j].evaluateValue?this.courseList2[j].evaluateValue:this.courseList[i].evaluateValue;
+                                    this.relatedList.push({
                                 name:this.courseList[i].teachingContent,
                                 supportDegree:this.courseList[i].supportDegree,
                                 supportFactor:this.courseList[i].supportFactor,
                                 supportValue1:this.courseList[i].evaluateValue,
                                 supportValue2:this.courseList2[j].evaluateValue,
-                                supportValueMin:this.courseList[i].evaluateValue>this.courseList2[j].evaluateValue?this.courseList2[j].evaluateValue:this.courseList[i].evaluateValue,
+                                supportValueMin:supportValueMin
                             })
                             break;
                         }
                     }
                 }
-                console.log(this.courseList);
-                console.log(this.relatedList);
+                this.result=0.0;
+                for(var i=0;i<this.relatedList.length;i++){
+                    this.result+=this.relatedList[i].supportValueMin;
+                }
+                ajaxGet("/system/professor/updateCountValue?result="+this.result+"&indexPointId="+this.indexPointId+'&yearStart=2009&yearEnd=2011',null,null,false,false);
+
             },
 
 
