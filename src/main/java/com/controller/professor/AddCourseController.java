@@ -59,7 +59,7 @@ public class AddCourseController {
         List<RelatedIndexPointCourse> list2=new ArrayList<>();
 
         for(RelatedIndexPointCourse relatedIndexPointCourse1:list){
-            System.out.println("id: "+relatedIndexPointCourse1.getCourseId()+" factor: "+relatedIndexPointCourse1.getSupportFactor());
+           // System.out.println("id: "+relatedIndexPointCourse1.getCourseId()+" factor: "+relatedIndexPointCourse1.getSupportFactor());
             String courseId=relatedIndexPointCourse1.getCourseId();
             String courseName=null;
             String courseYear=null;
