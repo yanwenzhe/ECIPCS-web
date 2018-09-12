@@ -63,6 +63,7 @@
                             </template>
                             <menu-item name="2-1"><a href="/system/professor/valueCalculated">毕业达成度计算</a></menu-item>
                             <menu-item  name="2-2"><a href="/system/professor/valueChart">毕业达成度图形化</a></menu-item>
+                            <menu-item  name="2-3"><a href="/system/professor/valueTable">支撑系数矩阵</a></menu-item>
                         </Submenu>
                 </Sider>
                 <Layout :style="{padding: '0 24px 24px'}">

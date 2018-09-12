@@ -28,6 +28,11 @@ public class ValueChartedController {
         return PageNameUtil.VALUE_CHART;
     }
 
+    @RequestMapping("valueTable")
+    public String valueTable(){
+        return PageNameUtil.VALUE_TABLE;
+    }
+
     @RequestMapping("getChartData")
     @ResponseBody
     public Object getChart(){
