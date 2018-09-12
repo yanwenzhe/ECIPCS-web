@@ -80,6 +80,12 @@
                             <div class="backGroundWidth">
                                 <div style="margin-top: 12px;margin-bottom: 12px">
 
+                                    <form action="/system/professor/download" enctype="multipart/form-data" method="post"
+                                          style="float:left;width:150px;margin-right: 30px;">
+                                        <input type="submit" value="下载"></input>
+                                    </form>
+
+
                                     <i-select  v-model="years"
                                                style="float:right;width:150px;margin-right: 30px;"
                                                >

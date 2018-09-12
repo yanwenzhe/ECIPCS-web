@@ -11,8 +11,7 @@
     </insert>
 
     <update id="updateRelatedIndexPointCourse" parameterType="com.entity.RelatedIndexPointCourse">
-        UPDATE RelatedIndexPointCourse SET supportFactor=#{supportFactor}, supportDegree = #{supportDegree},
-        evaluateValue = #{evaluateValue}, techingContent = #{techingContent}, assessmentContent = #{assessmentContent}
+        UPDATE RelatedIndexPointCourse SET teachingContent = #{teachingContent}, assessmentContent = #{assessmentContent}
         WHERE id = #{id}
     </update>
 
@@ -38,5 +37,11 @@
     <select id="getPointId" resultType="String">
         SELECT indexPointId FROM RelatedIndexPointCourse WHERE courseId = #{id}
     </select>
+
+
+    <update id="updateRelatedIndexPointCourseValue" parameterType="com.entity.RelatedIndexPointCourse">
+        UPDATE RelatedIndexPointCourse SET evaluateValue = #{evaluateValue}
+        WHERE indexPointId = #{indexPointId} and courseId = #{courseId}
+    </update>
 
 </mapper>

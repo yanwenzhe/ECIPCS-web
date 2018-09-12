@@ -163,7 +163,7 @@
             action="/teacher/upload">
                 <div style="padding: 20px 0">
             <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-            <p>  点击或拖放视频文件到此来上传  </p>
+            <p>  点击或拖放文件到此来上传  </p>
         </div>
     </Upload>
 </Modal>
